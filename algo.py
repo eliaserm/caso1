@@ -4,7 +4,7 @@ import json
 from bs4 import BeautifulSoup
 
 # guardamos el url en una variable
-url = "http://aviso.informador.com.mx/index.php/bienes-raices"
+url = "http://aviso.informador.com.mx/index.php/bienes_raices/busqueda?selecciono=1&ciudad_autocomplete=0&colonia_autocomplete=&transaccion=1&tipo=1&consulta=Zona+Metropolitana&precio_min=min&precio_max=max&recamaras_min=0&recamaras_max=0&metros_min=0&metros_max=0&quick-search=Zona+metropolitana-&quick-searchZap=Zapopan-3&quick-searchGdl=Guadalajara-2&quick-searchTlaq=Tlaquepaque-5&quick-searchTon=Tonalá-4"
 
 
 # obtenemos todo el html del url y lo guardamos en r
@@ -15,6 +15,7 @@ r.encoding = 'utf-8'
 
 #Convertimos el texto a un tipo con el cual podemos trabajar
 soup = BeautifulSoup(r.text, 'html.parser')
+
 #print(soup)
 
 
@@ -47,6 +48,14 @@ for c in casas:
 with open('ínformador.json', 'w') as archivo:
     json.dump(lista, archivo, sort_keys=False, indent=4)
 
+paginas = soup.find(class_="pagination")
+pagina =  paginas.find_all('li')
+urls = []
+i=2
+while i <len(pagina)-1:
+    //print(pagina[i].a['href'])
+    urls.append(pagina[i].a['href'])
+    i = i + 1
 # c = casas[0]
 # c.span
 # ubicacion = c.find_all(class_='location')[0].text
