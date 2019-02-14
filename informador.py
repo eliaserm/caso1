@@ -6,13 +6,15 @@ import datetime
 class Informador:
     def __init__(self):
         self.lista =[]
+        self.top =0;
 
     def to_json(self):
         with open(datetime.datetime.now().strftime('%Y-%m-%d')+'.json', 'w') as archivo:
             json.dump(self.lista, archivo, sort_keys=False, indent=4)
-    def scrapping(self):
+    def scrapping(self,url1,co):
+        self.top=co
         # guardamos el url en una variable
-        url = "http://aviso.informador.com.mx/index.php/bienes_raices/busqueda?selecciono=1&ciudad_autocomplete=0&colonia_autocomplete=&transaccion=1&tipo=1&consulta=Zona+Metropolitana&precio_min=min&precio_max=max&recamaras_min=0&recamaras_max=0&metros_min=0&metros_max=0&quick-search=Zona+metropolitana-&quick-searchZap=Zapopan-3&quick-searchGdl=Guadalajara-2&quick-searchTlaq=Tlaquepaque-5&quick-searchTon=Tonalá-4"
+        url = url1
 
         # obtenemos todo el html del url y lo guardamos en r
         r = requests.get(url)
@@ -44,13 +46,13 @@ class Informador:
             i = i + 1
         print(len(urls))
 
-        self.scrapping_paginas(urls)
+        self.scrapping_paginas(urls,url1)
 
-    def scrapping_paginas(self,urls):
+    def scrapping_paginas(self,urls,url1):
         for url in urls:
             r= requests.get(url)
             r.encoding ='uft-8'
-            url = "http://aviso.informador.com.mx/index.php/bienes_raices/busqueda?selecciono=1&ciudad_autocomplete=0&colonia_autocomplete=&transaccion=1&tipo=1&consulta=Zona+Metropolitana&precio_min=min&precio_max=max&recamaras_min=0&recamaras_max=0&metros_min=0&metros_max=0&quick-search=Zona+metropolitana-&quick-searchZap=Zapopan-3&quick-searchGdl=Guadalajara-2&quick-searchTlaq=Tlaquepaque-5&quick-searchTon=Tonalá-4"
+            url = url1
             r = requests.get(url)
             r.encoding = 'utf-8'
             soup = BeautifulSoup(r.text, 'html.parser')
@@ -59,18 +61,37 @@ class Informador:
             self.scrapping_casas(casas)
 
     def scrapping_casas(self,casas):
-        for c in casas:
-            casa = {
-                "ubicacion": c.find_all(class_='location')[0].text,
-                "titulo": c.a.text,
-                "precio": c.h5.text,
-                "descripcion": c.p.text,
-                "recamaras": c.find(class_='info-rec').text,
-                "m2": c.find(class_='info-m2').text,
-                "m2_2": c.find(class_='info-m2-2').text,
-                "wc": c.find(class_='info-wc').text,
-                "cars": c.find(class_='info-cars').text,
-                "colonia": c.find(class_='info-gps').contents[1],
-                "imgs": ['http:' + i['src'] for i in c.find_all('img')]
-            }
-            self.lista.append(casa)
+        if self.top == 1 or self.top ==2:
+            for c in casas:
+                casa = {
+                    "ubicacion": c.find_all(class_='location')[0].text,
+                    "titulo": c.a.text,
+                    "precio": c.h5.text,
+                    "descripcion": c.p.text,
+                    "recamaras": c.find(class_='info-rec').text,
+                    "m2": c.find(class_='info-m2').text,
+                    "m2_2": c.find(class_='info-m2-2').text,
+                    "wc": c.find(class_='info-wc').text,
+                    "cars": c.find(class_='info-cars').text,
+                    "colonia": c.find(class_='info-gps').contents[1],
+                    "imgs": ['http:' + i['src'] for i in c.find_all('img')],
+                    "tipo": "venta"
+                }
+                self.lista.append(casa)
+        elif self.top == 3 or self.top == 4:
+                for c in casas:
+                    casa = {
+                        "ubicacion": c.find_all(class_='location')[0].text,
+                        "titulo": c.a.text,
+                        "precio": c.h5.text,
+                        "descripcion": c.p.text,
+                        "recamaras": c.find(class_='info-rec').text,
+                        "m2": c.find(class_='info-m2').text,
+                        "m2_2": c.find(class_='info-m2-2').text,
+                        "wc": c.find(class_='info-wc').text,
+                        "cars": c.find(class_='info-cars').text,
+                        "colonia": c.find(class_='info-gps').contents[1],
+                        "imgs": ['http:' + i['src'] for i in c.find_all('img')],
+                        "tipo": "renta"
+                    }
+                    self.lista.append(casa)

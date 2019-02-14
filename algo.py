@@ -1,7 +1,16 @@
 from informador import Informador
+ur = "http://aviso.informador.com.mx/index.php/bienes_raices/busqueda?selecciono=0&ciudad_autocomplete=0&colonia_autocomplete=&transaccion=1&tipo=1&consulta=Zona+metropolitana&precio_min=min&precio_max=max&recamaras_min=0&recamaras_max=0&metros_min=0&metros_max=0&quick-search=Zona+metropolitana-&quick-searchZap=Zapopan-3&quick-searchGdl=Guadalajara-2&quick-searchTlaq=Tlaquepaque-5&quick-searchTon=Tonalá-4"
+ur2 = "http://aviso.informador.com.mx/index.php/bienes_raices/busqueda?selecciono=0&ciudad_autocomplete=0&colonia_autocomplete=&transaccion=1&tipo=2&consulta=Zona+metropolitana&precio_min=min&precio_max=max&recamaras_min=0&recamaras_max=0&metros_min=0&metros_max=0&quick-search=Zona+metropolitana-&quick-searchZap=Zapopan-3&quick-searchGdl=Guadalajara-2&quick-searchTlaq=Tlaquepaque-5&quick-searchTon=Tonalá-4"
+ur3 = "http://aviso.informador.com.mx/index.php/bienes_raices/busqueda?selecciono=0&ciudad_autocomplete=0&colonia_autocomplete=&transaccion=2&tipo=1&consulta=Zona+metropolitana&precio_min=min&precio_max=max&recamaras_min=0&recamaras_max=0&metros_min=0&metros_max=0&quick-search=Zona+metropolitana-&quick-searchZap=Zapopan-3&quick-searchGdl=Guadalajara-2&quick-searchTlaq=Tlaquepaque-5&quick-searchTon=Tonalá-4"
+ur4 = "http://aviso.informador.com.mx/index.php/bienes_raices/busqueda?selecciono=0&ciudad_autocomplete=0&colonia_autocomplete=&transaccion=2&tipo=2&consulta=Zona+metropolitana&precio_min=min&precio_max=max&recamaras_min=0&recamaras_max=0&metros_min=0&metros_max=0&quick-search=Zona+metropolitana-&quick-searchZap=Zapopan-3&quick-searchGdl=Guadalajara-2&quick-searchTlaq=Tlaquepaque-5&quick-searchTon=Tonalá-4"
+
 informador =Informador()
-informador.scrapping()
-print(len(informador.lista))
+informador.scrapping(ur,1)
+informador.scrapping(ur2,2)
+informador.scrapping(ur3,3)
+informador.scrapping(ur4,4)
+
+#print(len(informador.lista))
 informador.to_json()
 #Importamos las dos librerias necesarias
 # import  requests
