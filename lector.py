@@ -43,7 +43,7 @@ for file in files:
                 else:
                     id_fecha = rows[0][0]
 
-                print(id_colonia)
+
                 insert = 'INSERT INTO bienraiz(titulo, precio, m2, rooms, baths, cars, descripcion, id_tipo, id_origen, id_colonia, id_fecha) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
                 cursor.execute(insert, (casa['titulo'],
                                             casa['precio'],
