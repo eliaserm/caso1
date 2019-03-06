@@ -68,6 +68,11 @@ def insertar_fecha(file):
     conexion.commit()
     return  cursor.lastrowid
 
+def insertar_image(url,id_casa):
+    insert = 'INSERT INTO imagen(ubicacion,id_bienraiz)'\
+              'VALUE (%s,%s)'
+    cursor.execute(insert,(url,id_casa))
+    conexion.commit()
 
 def insertar_bienraiz(casa, id_colonia, id_fecha):
     insert = 'INSERT INTO bienraiz(titulo, precio, m2, rooms, baths, cars, descripcion, id_tipo, id_origen, id_colonia, id_fecha)\
@@ -84,6 +89,9 @@ def insertar_bienraiz(casa, id_colonia, id_fecha):
                             id_colonia,
                             id_fecha));
     conexion.commit()
+    id_casa = cursor.lastrowid
+    for img in casa['imgs']:
+        insertar_image(img,id_casa)
 
 
 def get_id_colonia(colonia, municipio):
